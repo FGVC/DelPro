@@ -4,8 +4,8 @@ This challenge is part of the **Computer Vision for Wildlife Conservation (CVWC)
 [https://cvwc2019.github.io/](https://cvwc2019.github.io/)
 
 
-##Dataset
+## Dataset
 
-[arXiv Paper](https://arxiv.org/abs/1906.05586) ([locally cached pdf](.local/1906.05586.pdf))
+[arXiv Paper](https://arxiv.org/abs/1906.05586) ([*locally cached pdf*](.local/1906.05586.pdf))
 
 
