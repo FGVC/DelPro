@@ -1,0 +1,44 @@
+{
+    "description": "Amur tiger classification.",
+    "network": {
+        "module": "models",
+        "model": "Resnet",
+        "kwargs": {
+            "model": "resnet50",
+            "freeze_base": false
+        }
+    },
+    "dataset": {
+        "module": "dataset",
+        "dataset": "ClassifyDataset",
+        "kwargs": {
+        }
+    },
+    "loss": {
+        "module": "torch.nn",
+        "loss": "CrossEntropyLoss",
+        "kwargs": {
+        }
+    },
+    "trainer": {
+        "module": "dnnutil",
+        "trainer": "ClassifierTrainer"
+    },
+    "optimizer": {
+        "module": "torch.optim",
+        "optim": "Adam",
+        "kwargs": {
+            "lr": 1e-3,
+            "weight_decay": 1e-5
+        }
+    },
+    "hyperparams": {
+        "epochs": 50,
+        "lr": 1e-3,
+        "batch_size": 16,
+        "num_workers": 4
+    },
+    "other": {
+
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "description": "Amur tiger siamese metric learning.",
+    "network": {
+        "module": "models",
+        "model": "ResnetEmbed",
+        "kwargs": {
+            "model": "resnet18",
+            "pretrained": true
+        }
+    },
+    "dataset": {
+        "module": "dataset",
+        "dataset": "ReIDDataset",
+        "kwargs": {
+        }
+    },
+    "loss": {
+        "module": "utils",
+        "loss": "AllPairContrastLoss",
+        "kwargs": {
+        }
+    },
+    "trainer": {
+        "module": "utils",
+        "trainer": "SiameseMetricTrainer"
+    },
+    "optimizer": {
+        "module": "torch.optim",
+        "optim": "SGD",
+        "kwargs": {
+            "lr": 5e-2,
+            "weight_decay": 1e-5,
+            "momentum": 0.9,
+            "nesterov": true
+        }
+    },
+    "hyperparams": {
+        "epochs": 50,
+        "lr": 5e-2,
+        "batch_size": 32,
+        "num_workers": 8
+    },
+    "other": {
+
+    }
+}
