@@ -10,22 +10,35 @@ import sys
 DATA = Path('data/')
 
 
+def get_dataloaders(data, batch_size, num_workers):
+    dload = torch.utils.data.DataLoader
+    loaders = []
+    for dset in ['train', 'test']:
+        d = getattr(data, dset)()
+        sampler, collate = None, None
+        if hasattr(d, 'sampler'):
+            sampler = d.sampler
+        if hasattr(d, 'collate'):
+            collate = d.collate
+        shuffle = (dset=='train' and not sampler)
+        
+        kw = dict(batch_size=batch_size, num_workers=num_workers,
+                  sampler=sampler, shuffle=shuffle,
+                  pin_memory=True)
+        if collate:
+            kw.update(collate_fn=collate)
+        loaders.append(dload(d, **kw))
+    return loaders
+
+
 def setup(cfg, args):
     # get dataset and setup data loaders
     workers = cfg.hp.get('num_workers', 4)
-
-    if 'collate' in cfg.other:
-        collate = getattr(dataset, cfg.other['collate']['func'])
-    else:
-        collate = None
+    #nsamp = cfg.hp.get('samples_per_epoch', None)
 
     data = cfg.data.data(**cfg.data.args)
 
-    nsamp = cfg.hp.get('samples_per_epoch', None)
-    loaders = dnnutil.get_dataloaders(data, args.batch_size,
-                                      num_workers=workers,
-                                      collate=collate,
-                                      nsamp=nsamp)
+    loaders = get_dataloaders(data, args.batch_size, workers)
 
     # setup the network
     net = dnnutil.load_model(cfg.model.model, args.model, **cfg.model.args)
