@@ -20,10 +20,15 @@ class Resnet(torch.nn.Module):
 
 
 class ResnetEmbed(torch.nn.Module):
-    def __init__(self, model='resnet18', pretrained=True):
+    def __init__(self, model='resnet18', pretrained=True, gray=False):
         super().__init__()
         model = getattr(torchvision.models, model)
         self.net = model(pretrained=pretrained)
+
+        if gray:
+            self.net.conv1.in_channels = 1
+            p = torch.nn.Parameter(self.net.conv1.weight.mean(1, keepdim=True))
+            self.net.conv1.weight = p
 
     def forward(self, x):
         x = self.net.conv1(x)
