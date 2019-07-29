@@ -33,7 +33,7 @@ totensor = T.Compose([
 
 
 def get_img_list(csv_file='data/reid_list_train.csv'):
-    data = open('reid_list_train.csv').read().strip().split('\n')
+    data = open(csv_file).read().strip().split('\n')
     data = [x.split(',') for x in data]
     images = [x[1] for x in data]
     labels = [int(x[0]) for x in data]
@@ -213,6 +213,25 @@ class _RankReIDData(_ReIDData):
         imgs = torch.stack([self.preprocess(i) for i in imgs], 0)
 
         return imgs, [int(lab)] * self.nimg
+
+
+class ReIDTestData(torch.utils.data.Dataset):
+    def __init__(self, root='data'):
+        super().__init__()
+        self.root = Path(root) / 'test'
+        self.files = sorted(self.root.glob('*.jpg'))
+        self.preprocess = basic_preprocess()['test']
+
+    def __len__(self):
+        return len(self.files)
+
+    def __getitem__(self, ind):
+        f = self.files[ind]
+        img = Image.open(f).convert('RGB')
+        img = self.preprocess(img)
+        id = int(f.stem)
+
+        return img, id
 
 
 class EntitySampler(torch.utils.data.Sampler):
