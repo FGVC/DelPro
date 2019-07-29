@@ -6,7 +6,7 @@ from itertools import groupby
 
 def splits(train_size=75, nsplits=5, csv_file='data/reid_list_train.csv'):
     flist = open(csv_file).read().strip().split('\n')
-    flist = list(map(lambda x: [int(x[0]), x[1]], (x.split(',') for x in flist)))
+    flist = list(map(lambda x: [x[0], x[1]], (x.split(',') for x in flist)))
     entity_counts = Counter([x[0] for x in flist])
     entities = list(entity_counts.keys())
     nclass = len(entity_counts)
