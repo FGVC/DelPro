@@ -5,19 +5,24 @@
         "model": "ResnetEmbed",
         "kwargs": {
             "model": "resnet18",
-            "pretrained": true
+            "pretrained": true,
+            "gray": true
         }
     },
     "dataset": {
         "module": "dataset",
         "dataset": "ReIDDataset",
         "kwargs": {
+            "split": "reid-hard-splits.split1",
+            "color": "L"
         }
     },
     "loss": {
         "module": "utils",
         "loss": "AllPairContrastLoss",
         "kwargs": {
+            "mn": 0.5,
+            "mp": 0.25
         }
     },
     "trainer": {
@@ -35,9 +40,9 @@
         }
     },
     "hyperparams": {
-        "epochs": 50,
+        "epochs": 12,
         "lr": 5e-2,
-        "batch_size": 32,
+        "batch_size": 40,
         "num_workers": 8
     },
     "other": {
