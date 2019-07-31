@@ -38,9 +38,10 @@ class RandomSpatialTransform(object):
         tps_points (int): number of points defining the thin-plate-spline
             warp. Each point will be randomly sampled within the image, and
             then perturbed to define the warping.
-        redius (tuple): min and max perturbation radii. The tps_points will 
-            be perturbed away from their original locations each by a random
-            distance in (min_radius, max_radius), and at a random angle.
+        radius (tuple): min and max perturbation radii, defined as a fraction
+            of the smaller side of the image. The tps_points will be perturbed
+            away from their original locations each by a random distance in
+            (min_radius, max_radius), and at a random angle.
         interpolation (int): image resampling interpolation. 1 is bilinear,
             3 is bicubic. Recommended to be 3.
     '''
