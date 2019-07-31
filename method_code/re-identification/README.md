@@ -2,6 +2,7 @@
 
 - [dnnutil](https://github.com/catalys1/dnnutil)
 - pytorch 1.1.0
+- numba (for thin plate spline augmentation)
 
 
 ## Installation
